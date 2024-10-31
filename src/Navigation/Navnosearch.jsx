@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import "./Navnosearch.css";
 
 
-const Navnosearch = ({ handleInputChange, query }) => {
+const Navnosearch = () => {
   return (
     <nav>
       <div className="nav-container">

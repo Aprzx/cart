@@ -49,6 +49,20 @@ function App() {
     toast.success(`${product.title} has been added to your cart!`);
   };
 
+  const updateQuantity = (index, change) => {
+    setCart((prevCart) => {
+      const updatedCart = [...prevCart];
+      const newQuantity = updatedCart[index].quantity + change;
+
+      // Ensure quantity doesn't go below 1
+      if (newQuantity > 0) {
+        updatedCart[index].quantity = newQuantity;
+      }
+
+      return updatedCart;
+    });
+  };
+
 
   function filteredData(products, selected, query) {
     let filteredProducts = products;
@@ -71,7 +85,7 @@ function App() {
     }
 
     return filteredProducts.map(
-      ({ img, title, star, reviews, prevPrice, newPrice }) => (
+      ({ img, title, star, reviews, prevPrice, newPrice, quantity }) => (
         <Card
           key={Math.random()}
           img={img}
@@ -80,7 +94,7 @@ function App() {
           reviews={reviews}
           prevPrice={prevPrice}
           newPrice={newPrice}
-          addToCart={() => addToCart({ img, title, star, reviews, prevPrice, newPrice })}
+          addToCart={() => addToCart({ img, title, star, reviews, prevPrice, newPrice ,quantity })}
         />
       )
     );
@@ -105,7 +119,7 @@ function App() {
       <Route path="/cart" element={
         <>
         <Navigationnosearch />
-        <CartPage cart={cart} />
+        <CartPage cart={cart} updateQuantity={updateQuantity} />
         
         </>
         } />
