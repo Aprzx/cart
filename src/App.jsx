@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Navigation from "./Navigation/Nav";
+import Navigationnosearch from "./Navigation/Navnosearch";
 import Products from "./Products/Products";
 import products from "./db/data";
 import Recommended from "./Recommended/Recommended";
@@ -38,7 +39,7 @@ function App() {
 
   const addToCart = (product) => {
     setCart((prevCart) => {
-      console.log("Current cart:", prevCart); // Log the current state of the cart
+      console.log("Current cart:", prevCart);
       if (!Array.isArray(prevCart)) {
         console.error("prevCart is not an array:", prevCart);
         return [product];
@@ -47,7 +48,7 @@ function App() {
     });
     toast.success(`${product.title} has been added to your cart!`);
   };
-  
+
 
   function filteredData(products, selected, query) {
     let filteredProducts = products;
@@ -88,20 +89,31 @@ function App() {
   const result = filteredData(products, selectedCategory, query);
 
   return (
-    <Router>
-      <Sidebars handleChange={handleChange} />
-      <Navigation query={query} handleInputChange={handleInputChange} />
-      <Recommended handleClick={handleClick} />
-  
-      <Routes> {/* Change this line */}
-        <Route path="/cart" element={<CartPage cart={cart} />} /> {/* Update this line */}
-        <Route path="/" element={<Products result={result} />} /> {/* Update this line */}
-      </Routes> {/* Change this line */}
-      
-      <ToastContainer position="bottom-left" autoClose={3000} hideProgressBar={false} closeOnClick pauseOnHover />
-    </Router>
+    <>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <>
+            <Sidebars handleChange={handleChange} />
+            <Navigation query={query} handleInputChange={handleInputChange} />
+            <Recommended handleClick={handleClick} />
+            <Products result={result} />
+          </>
+        }
+      />
+      <Route path="/cart" element={
+        <>
+        <Navigationnosearch />
+        <CartPage cart={cart} />
+        
+        </>
+        } />
+    </Routes>
+    <ToastContainer />
+    </>
   );
-  
+
 }
 
 export default App;
