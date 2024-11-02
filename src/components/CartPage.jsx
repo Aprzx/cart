@@ -2,18 +2,17 @@ import React from "react";
 import './CartPage.css';
 
 function CartPage({ cart, updateQuantity }) {
-  // Calculate the total price
   const totalPrice = cart.reduce((total, item) => {
     const price = Number(item.newPrice);
     return total + price * item.quantity;
   }, 0);
 
   const handleIncrement = (index) => {
-    updateQuantity(index, 1); // Increase quantity by 1
+    updateQuantity(index, 1); 
   };
 
   const handleDecrement = (index) => {
-    updateQuantity(index, -1); // Decrease quantity by 1
+    updateQuantity(index, -1); 
   };
 
   return (
@@ -29,7 +28,7 @@ function CartPage({ cart, updateQuantity }) {
                 <span className="cart-title">{item.title}</span> - ${Number(item.newPrice).toFixed(2)} (Qty: {item.quantity})
                 <div className="quantity-controls">
                   <button onClick={() => handleDecrement(index)} disabled={item.quantity <= 1}>−</button>
-                  <span>{item.quantity}</span>
+                  <span>  {item.quantity}  </span>
                   <button onClick={() => handleIncrement(index)}>+</button>
                 </div>
               </li>
